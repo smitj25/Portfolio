@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #121212;
+  --foreground: #ededed;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar for Scrollytelling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Custom Cursor styles ported from original portfolio */
+.cursor-main {
+  --size: 0px;
+  position: fixed;
+  top: calc(var(--size) / -2);
+  left: calc(var(--size) / -2);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50px;
+  pointer-events: none;
+  z-index: 9999;
+  background-color: #fa6c2a;
+  box-shadow: 0px 0px 30px 0px rgb(250, 108, 42);
+  mix-blend-mode: difference;
+  transition: top 0.3s ease-out, left 0.3s ease-out, width 0.3s ease-out, height 0.3s ease-out;
+}
+.cursor-icons {
+  top: 10px;
+  left: 10px;
+  height: calc(var(--cursorH) - 20px);
+  transition: all 0.5s ease-out, height 0.5s ease-in-out;
+}
+.cursor-disable {
+  --size: 0px;
+}
+@media only screen and (min-width: 600px) {
+  .cursor-main {
+    --size: 50px;
+  }
+  .cursor-disable {
+    --size: 0px;
+  }
+}
+
+/* Hide cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-main {
+    display: none !important;
+  }
+}
+
