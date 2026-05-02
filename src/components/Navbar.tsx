@@ -50,10 +50,10 @@ export default function Navbar() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
+      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-3 sm:px-4"
     >
       <div
-        className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full border transition-colors duration-300 ${
+        className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full border transition-colors duration-300 max-w-[calc(100vw-1.5rem)] overflow-x-auto scrollbar-hide ${
           isScrolled
             ? "bg-black/40 backdrop-blur-md border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
             : "bg-transparent border-transparent"
@@ -66,7 +66,7 @@ export default function Navbar() {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="mr-2 sm:mr-6 px-2 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-widest text-white hover:bg-white/[0.08] transition-all duration-300 flex items-center gap-2"
+          className="mr-2 sm:mr-6 px-2 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-widest text-white hover:bg-white/[0.08] transition-all duration-300 flex items-center gap-2 shrink-0"
         >
           <div className="w-1.5 h-1.5 rounded-full bg-[#fa6c2a]" />
           Home
@@ -79,7 +79,7 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               onClick={(e) => handleScroll(e, link.href)}
-              className="px-2 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all duration-300"
+              className="px-2 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all duration-300 whitespace-nowrap shrink-0"
             >
               {link.name}
             </a>

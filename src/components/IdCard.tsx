@@ -273,7 +273,7 @@ export default function IdCard() {
       {/* ── Desktop Layout: side-by-side with absolute positioning ── */}
       <div className="hidden lg:block relative w-full h-screen">
         {/* 3D Background Layer */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0" style={{ touchAction: 'none' }}>
           <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
             <color attach="background" args={["#121212"]} />
             <ambientLight intensity={Math.PI} />
@@ -290,7 +290,7 @@ export default function IdCard() {
         </div>
 
         {/* Form overlay — right side */}
-        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center items-end px-12 lg:px-16">
+        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center items-end px-12 lg:px-16 pb-24">
           <div className="pointer-events-auto w-[70%] xl:w-[65%] flex justify-end">
             <ContactForm />
           </div>
@@ -300,7 +300,7 @@ export default function IdCard() {
         <div className="absolute bottom-8 left-0 w-full flex flex-wrap justify-center items-center gap-12 z-20 pointer-events-auto">
           <a href="https://github.com/smitj25" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#fa6c2a] transition-colors font-semibold text-sm uppercase tracking-widest">GitHub</a>
           <a href="https://linkedin.com/in/SmitPatil" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#fa6c2a] transition-colors font-semibold text-sm uppercase tracking-widest">LinkedIn</a>
-          <a href="/Smit_Patil_Resume.pdf" download className="text-gray-500 hover:text-[#fa6c2a] transition-colors font-semibold text-sm uppercase tracking-widest">Resume</a>
+          <a href="/Smit_Patil_Resume.pdf" download className="text-gray-500 hover:text-[#fa6c2a] transition-colors font-semibold text-sm uppercase tracking-widest flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>Resume</a>
         </div>
       </div>
 
@@ -312,7 +312,7 @@ export default function IdCard() {
         </div>
 
         {/* 3D Canvas area — card hangs below the form */}
-        <div className="relative w-full h-[50vh] sm:h-[60vh]">
+        <div className="relative w-full h-[50vh] sm:h-[60vh]" style={{ touchAction: 'none' }}>
           <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
             <color attach="background" args={["#121212"]} />
             <ambientLight intensity={Math.PI} />
@@ -335,7 +335,7 @@ export default function IdCard() {
             <span className="w-1 h-1 rounded-full bg-white/[0.15]"></span>
             <a href="https://linkedin.com/in/SmitPatil" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">LinkedIn</a>
             <span className="w-1 h-1 rounded-full bg-white/[0.15]"></span>
-            <a href="/Smit_Patil_Resume.pdf" download className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">Resume</a>
+            <a href="/Smit_Patil_Resume.pdf" download className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em] flex items-center gap-1"><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>Resume</a>
           </div>
         </div>
       </div>

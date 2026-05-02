@@ -20,7 +20,7 @@ const svgs = [
 
 export default function SkillMarquee() {
   return (
-    <div className="relative w-full overflow-hidden bg-transparent py-12 z-30">
+    <div className="relative w-full overflow-hidden bg-transparent py-4 z-30">
       {/* Subtle fade effect on the left and right edges */}
       <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-r from-[#121212] to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-l from-[#121212] to-transparent z-10 pointer-events-none" />

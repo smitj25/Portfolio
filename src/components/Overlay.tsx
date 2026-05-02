@@ -40,8 +40,8 @@ export default function Overlay({ progress }: OverlayProps) {
                 className="absolute inset-y-0 left-4 md:left-12 lg:left-24 flex flex-col items-start justify-center max-w-2xl px-4"
             >
                 <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-xl">
-                    I build digital <br className="hidden md:block" />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500"> experiences.</span>
+                    I build intelligent <br className="hidden md:block" />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500"> systems.</span>
                 </h2>
             </motion.div>
 
@@ -51,8 +51,8 @@ export default function Overlay({ progress }: OverlayProps) {
                 className="absolute inset-y-0 right-4 md:right-12 lg:right-24 flex flex-col items-end justify-center max-w-2xl text-right px-4"
             >
                 <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-xl">
-                    Bridging design <br className="hidden md:block" />
-                    <span className="text-[#8c8c8c]">and engineering.</span>
+                    Building at the <br className="hidden md:block" />
+                    <span className="text-[#8c8c8c]">edge of AI.</span>
                 </h2>
             </motion.div>
 

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const experienceData = [
   {
     role: "Generative AI Intern",
-    company: "LTM (Let The Music)",
+    company: "LTM",
     duration: "Jan 2026 – Present",
     description:
       "Integrating real-time Generative AI solutions into scalable production use cases. Designing, building, and deploying production-ready AI systems with high-quality deliverables.",
@@ -14,7 +14,7 @@ const experienceData = [
       "Designed scalable architectures using LangChain, vector databases, and retrieval-augmented generation",
       "Delivered high-quality AI-powered features integrated into existing product workflows",
     ],
-    tech: ["GenAI", "LangChain", "Python", "Docker", "RAG"],
+    tech: ["GenAI", "LangChain", "Python", "RAG"],
   },
 ];
 

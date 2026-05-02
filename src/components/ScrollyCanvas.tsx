@@ -95,10 +95,12 @@ export default function ScrollyCanvas({ renderOverlay }: ScrollyCanvasProps) {
     useEffect(() => {
         const resizeCanvas = () => {
             if (canvasRef.current) {
-                // Double the resolution for retina displays
+                // Use visualViewport for accurate mobile dimensions
                 const dpr = window.devicePixelRatio || 1;
-                canvasRef.current.width = window.innerWidth * dpr;
-                canvasRef.current.height = window.innerHeight * dpr;
+                const vw = window.visualViewport?.width ?? document.documentElement.clientWidth;
+                const vh = window.visualViewport?.height ?? window.innerHeight;
+                canvasRef.current.width = vw * dpr;
+                canvasRef.current.height = vh * dpr;
 
                 const ctx = canvasRef.current.getContext("2d");
                 if (ctx) ctx.scale(dpr, dpr);
@@ -107,7 +109,12 @@ export default function ScrollyCanvas({ renderOverlay }: ScrollyCanvasProps) {
 
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
-        return () => window.removeEventListener("resize", resizeCanvas);
+        // Also listen to visualViewport resize for mobile
+        window.visualViewport?.addEventListener("resize", resizeCanvas);
+        return () => {
+            window.removeEventListener("resize", resizeCanvas);
+            window.visualViewport?.removeEventListener("resize", resizeCanvas);
+        };
     }, []);
 
     return (

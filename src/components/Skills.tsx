@@ -18,7 +18,6 @@ const techImages = [
   "/tech/react2.webp",
   "/tech/next2.webp",
   "/tech/node2.webp",
-  "/tech/express.webp",
   "/tech/mongo.webp",
   "/tech/mysql.webp",
   "/tech/typescript.webp",
@@ -203,7 +202,7 @@ export default function Skills() {
       </div>
 
       {/* 3D Canvas Background Layer */}
-      <div className="absolute inset-0 top-[20%] md:top-[15%] w-full h-full cursor-grab active:cursor-grabbing">
+      <div className="absolute inset-0 top-[20%] md:top-[15%] w-full h-full cursor-grab active:cursor-grabbing" style={{ touchAction: 'none' }}>
         {textures.length > 0 && (
           <Canvas
             shadows

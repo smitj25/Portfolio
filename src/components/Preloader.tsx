@@ -8,7 +8,29 @@ export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Artificial loading sequence
+    // Preload first 10 frames of the scrollytelling sequence
+    const framesToPreload = 10;
+    let framesLoaded = 0;
+    let framesReady = false;
+
+    for (let i = 0; i < framesToPreload; i++) {
+      const img = new Image();
+      img.src = `/video/frame_${i.toString().padStart(2, "0")}_delay-0.066s.png`;
+      img.onload = () => {
+        framesLoaded++;
+        if (framesLoaded >= framesToPreload) {
+          framesReady = true;
+        }
+      };
+      img.onerror = () => {
+        framesLoaded++;
+        if (framesLoaded >= framesToPreload) {
+          framesReady = true;
+        }
+      };
+    }
+
+    // Artificial loading sequence — runs in parallel with frame preloading
     const duration = 1800; // 1.8 seconds total
     const interval = 20; // Update every 20ms
     const steps = duration / interval;
@@ -21,9 +43,15 @@ export default function Preloader() {
 
       if (currentStep >= steps) {
         clearInterval(timer);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 400); // Brief pause at 100% before animating out
+        // Wait until both timer and frames are ready
+        const checkReady = setInterval(() => {
+          if (framesReady) {
+            clearInterval(checkReady);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 400); // Brief pause at 100% before animating out
+          }
+        }, 50);
       }
     }, interval);
 
