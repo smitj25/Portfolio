@@ -8,6 +8,7 @@ export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
     // Preload first 10 frames of the scrollytelling sequence
     const framesToPreload = 10;
     let framesLoaded = 0;
@@ -15,7 +16,10 @@ export default function Preloader() {
 
     for (let i = 0; i < framesToPreload; i++) {
       const img = new Image();
-      img.src = `/video/frame_${i.toString().padStart(2, "0")}_delay-0.066s.png`;
+      const paddedIndex = i.toString().padStart(2, "0");
+      img.src = isMobile 
+        ? `/video/mobile/frame_${paddedIndex}.jpg?v=2`
+        : `/video/frame_${paddedIndex}_delay-0.066s.png`;
       img.onload = () => {
         framesLoaded++;
         if (framesLoaded >= framesToPreload) {

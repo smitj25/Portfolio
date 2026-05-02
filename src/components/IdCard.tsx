@@ -130,9 +130,14 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   const [hovered, hover] = useState(false);
   const [flipped, setFlipped] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
+  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
+  const shiftX = isDesktop ? -viewport.width * 0.35 : 0;
+  const fixedY = isDesktop ? 5 : 11;
+  const segmentLength = isDesktop ? 1 : 3.8;
+
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], segmentLength]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], segmentLength]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], segmentLength]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, 2.175, 0],
@@ -201,24 +206,20 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
 
   curve.curveType = "chordal";
 
-  // On desktop: shift left for the 30:70 layout. On mobile: center the card.
-  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
-  const shiftX = isDesktop ? -viewport.width * 0.35 : 0;
-
   return (
     <>
-      <group position={[shiftX, 5, 0]}>
+      <group position={[shiftX, fixedY, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
+        <RigidBody position={[segmentLength * 0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
+        <RigidBody position={[segmentLength, 0, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
+        <RigidBody position={[segmentLength * 1.5, 0, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? "kinematicPosition" : "dynamic"}>
+        <RigidBody position={[segmentLength * 2, 0, 0]} ref={card} {...segmentProps} type={dragged ? "kinematicPosition" : "dynamic"}>
           <CuboidCollider args={[0.975, 1.5375, 0.03]} position={[0, 0.1575, 0]} />
           <group
             scale={1.5}
@@ -274,7 +275,7 @@ export default function IdCard() {
       <div className="hidden lg:block relative w-full h-screen">
         {/* 3D Background Layer */}
         <div className="absolute inset-0 z-0" style={{ touchAction: 'none' }}>
-          <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
+          <Canvas camera={{ position: [0, 0, 12], fov: 25 }}>
             <color attach="background" args={["#121212"]} />
             <ambientLight intensity={Math.PI} />
             <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
@@ -287,6 +288,11 @@ export default function IdCard() {
               <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
             </Environment>
           </Canvas>
+        </div>
+
+        {/* Desktop Interaction Nudge */}
+        <div className="absolute bottom-[20%] left-[15%] xl:left-[20%] -translate-x-1/2 z-10 pointer-events-none flex flex-col items-center opacity-40">
+          <span className="text-white text-[10px] tracking-[0.2em] uppercase font-bold text-center leading-relaxed">Drag to move<br />Tap to flip</span>
         </div>
 
         {/* Form overlay — right side */}
@@ -304,16 +310,11 @@ export default function IdCard() {
         </div>
       </div>
 
-      {/* ── Mobile/Tablet Layout: stacked vertically ── */}
-      <div className="lg:hidden flex flex-col">
-        {/* Contact Form */}
-        <div className="px-4 sm:px-8 md:px-12 pt-12 sm:pt-16 pb-6">
-          <ContactForm />
-        </div>
-
-        {/* 3D Canvas area — card hangs below the form */}
-        <div className="relative w-full h-[50vh] sm:h-[60vh]" style={{ touchAction: 'none' }}>
-          <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
+      {/* ── Mobile/Tablet Layout ── */}
+      <div className="lg:hidden relative w-full min-h-[100svh] flex flex-col">
+        {/* 3D Canvas Background */}
+        <div className="absolute inset-0 z-0" style={{ touchAction: 'none' }}>
+          <Canvas camera={{ position: [0, 4, 30], fov: 25 }}>
             <color attach="background" args={["#121212"]} />
             <ambientLight intensity={Math.PI} />
             <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
@@ -328,14 +329,30 @@ export default function IdCard() {
           </Canvas>
         </div>
 
-        {/* Footer */}
-        <div className="w-full flex justify-center py-8 pb-12 z-20 pointer-events-auto">
-          <div className="flex items-center gap-6 sm:gap-8 px-6 sm:px-8 py-3 rounded-full border border-white/[0.08] bg-black/40 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-            <a href="https://github.com/smitj25" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">GitHub</a>
-            <span className="w-1 h-1 rounded-full bg-white/[0.15]"></span>
-            <a href="https://linkedin.com/in/SmitPatil" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">LinkedIn</a>
-            <span className="w-1 h-1 rounded-full bg-white/[0.15]"></span>
-            <a href="/Smit_Patil_Resume.pdf" download className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em] flex items-center gap-1"><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>Resume</a>
+        {/* Content stacked on top */}
+        <div className="relative z-10 flex flex-col min-h-[100svh] pointer-events-none">
+          {/* Contact Form */}
+          <div className="px-4 sm:px-8 md:px-12 pt-12 sm:pt-16 pb-6 pointer-events-auto">
+            <ContactForm />
+          </div>
+
+          {/* Spacer for where the card hangs */}
+          <div className="flex-1 min-h-[80vh]"></div>
+
+          {/* Mobile Interaction Nudge */}
+          <div className="w-full flex flex-col items-center opacity-40 pb-8 pointer-events-none">
+            <span className="text-white/80 text-[10px] tracking-[0.2em] uppercase font-bold text-center leading-relaxed">Drag to move<br />Tap to flip</span>
+          </div>
+
+          {/* Footer */}
+          <div className="w-full flex justify-center pb-12 pointer-events-auto">
+            <div className="flex items-center gap-6 sm:gap-8 px-6 sm:px-8 py-3 rounded-full border border-white/[0.08] bg-black/40 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+              <a href="https://github.com/smitj25" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">GitHub</a>
+              <span className="w-1 h-1 rounded-full bg-white/[0.15]"></span>
+              <a href="https://linkedin.com/in/SmitPatil" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">LinkedIn</a>
+              <span className="w-1 h-1 rounded-full bg-white/[0.15]"></span>
+              <a href="/Smit_Patil_Resume.pdf" download className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em] flex items-center gap-1"><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>Resume</a>
+            </div>
           </div>
         </div>
       </div>

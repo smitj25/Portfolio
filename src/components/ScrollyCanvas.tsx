@@ -5,9 +5,11 @@ import { useScroll, useTransform, MotionValue } from "framer-motion";
 
 const FRAME_COUNT = 71;
 
-function getFramePath(index: number) {
+function getFramePath(index: number, isMobile: boolean = false) {
     const paddedIndex = index.toString().padStart(2, "0");
-    return `/video/frame_${paddedIndex}_delay-0.066s.png`;
+    return isMobile 
+        ? `/video/mobile/frame_${paddedIndex}.jpg?v=2`
+        : `/video/frame_${paddedIndex}_delay-0.066s.png`;
 }
 
 interface ScrollyCanvasProps {
@@ -28,12 +30,13 @@ export default function ScrollyCanvas({ renderOverlay }: ScrollyCanvasProps) {
 
     // Preload images
     useEffect(() => {
+        const isMobile = window.innerWidth < 768;
         const loadedImages: HTMLImageElement[] = [];
         let loadedCount = 0;
 
         for (let i = 0; i < FRAME_COUNT; i++) {
             const img = new Image();
-            img.src = getFramePath(i);
+            img.src = getFramePath(i, isMobile);
             img.onload = () => {
                 loadedCount++;
                 if (loadedCount === FRAME_COUNT) {
