@@ -106,7 +106,8 @@ export default function ScrollyCanvas({ renderOverlay }: ScrollyCanvasProps) {
                 canvasRef.current.height = vh * dpr;
 
                 const ctx = canvasRef.current.getContext("2d");
-                if (ctx) ctx.scale(dpr, dpr);
+                // Do NOT scale the context here because render() uses canvas.width (physical pixels) directly.
+                // if (ctx) ctx.scale(dpr, dpr);
             }
         };
 
