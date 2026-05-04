@@ -91,6 +91,7 @@ function BouncingSphere({
       position={[r(20), r(20) - 10, r(20) - 10]}
       ref={api}
       colliders={false}
+      enabledRotations={[false, false, true]} // Lock X and Y so the logo always faces forward
     >
       <BallCollider args={[scale]} />
       {/* Invisible cylinder collider adds interesting wobble to the bounce */}

@@ -30,7 +30,7 @@ export default function Overlay({ progress }: OverlayProps) {
                     SMIT PATIL.
                 </h1>
                 <p className="mt-4 text-xl md:text-2xl lg:text-3xl text-gray-300 font-light tracking-wide">
-                    Creative Developer.
+                    AI Software Engineer.
                 </p>
             </motion.div>
 

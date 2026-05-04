@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const navLinks = [
+  { name: "Home", href: "#" },
   { name: "Experience", href: "#experience" },
   { name: "Education", href: "#education" },
   { name: "Skills", href: "#skills" },
@@ -13,19 +14,37 @@ const navLinks = [
 
 export default function Navbar() {
   const { scrollY } = useScroll();
-  const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("#");
+
+  // Track the active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      let current = "#";
+      // Iterate backwards to find the first section that is on screen
+      for (let i = navLinks.length - 1; i >= 0; i--) {
+        const link = navLinks[i];
+        if (link.href === "#") continue;
+        const element = document.querySelector(link.href);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // If the top of the section is somewhat above the middle of the screen
+          if (rect.top <= window.innerHeight / 2.5) {
+            current = link.href;
+            break;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Initial check
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    
-    // Hide navbar when scrolling down, show when scrolling up
-    if (latest > previous && latest > 150) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-
     // Add backdrop blur only when scrolled past the very top
     if (latest > 50) {
       setIsScrolled(true);
@@ -34,24 +53,20 @@ export default function Navbar() {
     }
   });
 
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
+    if (href === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
   return (
-    <motion.nav
-      variants={{
-        visible: { y: 0, opacity: 1 },
-        hidden: { y: "-100%", opacity: 0 },
-      }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-3 sm:px-4"
-    >
+    <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-3 sm:px-4">
       <div
         className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full border transition-colors duration-300 max-w-[calc(100vw-1.5rem)] overflow-x-auto scrollbar-hide ${
           isScrolled
@@ -59,33 +74,32 @@ export default function Navbar() {
             : "bg-transparent border-transparent"
         }`}
       >
-        {/* Logo/Home link */}
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          className="mr-2 sm:mr-6 px-2 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-widest text-white hover:bg-white/[0.08] transition-all duration-300 flex items-center gap-2 shrink-0"
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-[#fa6c2a]" />
-          Home
-        </a>
-
         {/* Links */}
-        <div className="flex items-center gap-1 sm:gap-2">
-          {navLinks.map((link) => (
+        {navLinks.map((link) => {
+          const isActive = activeSection === link.href;
+          return (
             <a
               key={link.name}
               href={link.href}
-              onClick={(e) => handleScroll(e, link.href)}
-              className="px-2 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all duration-300 whitespace-nowrap shrink-0"
+              onClick={(e) => handleNavClick(e, link.href)}
+              className={`relative px-2 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs uppercase tracking-widest transition-all duration-300 whitespace-nowrap shrink-0 flex items-center gap-2 ${
+                link.name === "Home" ? "mr-2 sm:mr-4 font-bold" : "font-semibold"
+              } ${
+                isActive ? "text-white" : "text-gray-400 hover:text-white hover:bg-white/[0.08]"
+              }`}
             >
+              {isActive && (
+                <motion.div
+                  layoutId="activeNavDot"
+                  className="w-1.5 h-1.5 rounded-full bg-[#fa6c2a]"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              )}
               {link.name}
             </a>
-          ))}
-        </div>
+          );
+        })}
       </div>
-    </motion.nav>
+    </nav>
   );
 }

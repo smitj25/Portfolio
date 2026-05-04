@@ -29,7 +29,7 @@ function emailShell(content: string): string {
       <td style="padding: 24px 40px; background-color: rgba(255, 255, 255, 0.03); border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
         <p style="font-size: 13px; color: #6b7280; margin: 0 0 10px 0;">This is an automated response confirming we received your message.</p>
         <p style="margin: 0; font-size: 13px;">
-          <a href="https://linkedin.com/in/SmitPatil" style="color: #fa6c2a; text-decoration: none; font-weight: 600;">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/smitj25/" style="color: #fa6c2a; text-decoration: none; font-weight: 600;">LinkedIn</a>
           <span style="color: #4b5563; margin: 0 8px;">&bull;</span>
           <a href="https://github.com/smitj25" style="color: #fa6c2a; text-decoration: none; font-weight: 600;">GitHub</a>
         </p>

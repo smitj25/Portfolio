@@ -291,7 +291,7 @@ export default function IdCard() {
         </div>
 
         {/* Desktop Interaction Nudge */}
-        <div className="absolute bottom-[20%] left-[15%] xl:left-[20%] -translate-x-1/2 z-10 pointer-events-none flex flex-col items-center opacity-40">
+        <div className="absolute bottom-[8%] left-[8%] xl:left-[16%] -translate-x-1/2 z-10 pointer-events-none flex flex-col items-center opacity-40">
           <span className="text-white text-[10px] tracking-[0.2em] uppercase font-bold text-center leading-relaxed">Drag to move<br />Tap to flip</span>
         </div>
 
@@ -305,7 +305,7 @@ export default function IdCard() {
         {/* Footer */}
         <div className="absolute bottom-8 left-0 w-full flex flex-wrap justify-center items-center gap-12 z-20 pointer-events-auto">
           <a href="https://github.com/smitj25" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#fa6c2a] transition-colors font-semibold text-sm uppercase tracking-widest">GitHub</a>
-          <a href="https://linkedin.com/in/SmitPatil" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#fa6c2a] transition-colors font-semibold text-sm uppercase tracking-widest">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/smitj25/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#fa6c2a] transition-colors font-semibold text-sm uppercase tracking-widest">LinkedIn</a>
           <a href="/Smit_Patil_Resume.pdf" download className="text-gray-500 hover:text-[#fa6c2a] transition-colors font-semibold text-sm uppercase tracking-widest flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>Resume</a>
         </div>
       </div>
@@ -340,7 +340,7 @@ export default function IdCard() {
           <div className="flex-1 min-h-[80vh]"></div>
 
           {/* Mobile Interaction Nudge */}
-          <div className="w-full flex flex-col items-center opacity-40 pb-8 pointer-events-none">
+          <div className="w-full flex flex-col items-center opacity-40 pb-4 mt-8 pointer-events-none">
             <span className="text-white/80 text-[10px] tracking-[0.2em] uppercase font-bold text-center leading-relaxed">Drag to move<br />Tap to flip</span>
           </div>
 
@@ -349,7 +349,7 @@ export default function IdCard() {
             <div className="flex items-center gap-6 sm:gap-8 px-6 sm:px-8 py-3 rounded-full border border-white/[0.08] bg-black/40 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
               <a href="https://github.com/smitj25" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">GitHub</a>
               <span className="w-1 h-1 rounded-full bg-white/[0.15]"></span>
-              <a href="https://linkedin.com/in/SmitPatil" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/smitj25/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em]">LinkedIn</a>
               <span className="w-1 h-1 rounded-full bg-white/[0.15]"></span>
               <a href="/Smit_Patil_Resume.pdf" download className="text-gray-400 hover:text-[#fa6c2a] hover:scale-105 transition-all font-semibold text-[10px] sm:text-xs uppercase tracking-[0.15em] flex items-center gap-1"><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>Resume</a>
             </div>
