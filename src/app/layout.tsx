@@ -4,6 +4,7 @@ import "./globals.css";
 import Cursor from "@/components/Cursor";
 import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <Cursor />
         <Navbar />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
